@@ -1,0 +1,31 @@
+name: Demo pull with tags
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Pull from Lokalise
+        uses: lokalise/lokalise-pull-action@v3.6.0
+        with:
+          api_token: ${{ secrets.LOKALISE_API_TOKEN }}
+          project_id: 8421778667e2dd2bc61ff8.47567322
+          base_lang: en
+          translations_path: |
+            TRANSLATIONS_PATH1
+            TRANSLATIONS_PATH2
+          file_format: json
+          additional_params: |
+            --indentation=2sp
+            --export-empty-as=skip
+            --export-sort=a_z
+            --replace-breaks=false
+            --language-mapping=[{"original_language_iso":"en_US","custom_language_iso":"en-US"}]
